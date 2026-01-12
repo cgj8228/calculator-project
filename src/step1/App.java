@@ -24,8 +24,8 @@ public class App {
 
     int result = 0;
     /* 제어문을 활용하여 위 요구사항을 만족할 수 있게 구현합니다.*/
-    if (operator == '+' || operator == '-' || operator == '*' || operator == '%'){
-        if (operator == '%' && num2==0) {
+    if (operator == '+' || operator == '-' || operator == '*' || operator == '/'){
+        if (operator == '/' && num2==0) {
             System.out.println("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
             return;
         }
@@ -43,7 +43,7 @@ public class App {
                 break;
 
             case '%':
-                result = num1 % num2;
+                result = num1 / num2;
                 break;
         }
     } else {
