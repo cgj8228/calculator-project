@@ -8,36 +8,29 @@ public class Calculator {
     public static int result;
     private List<Integer>  arryList = new ArrayList<>();
 
-
     public int calculate(int num1, int num2, char operator) {
         int result= 0;
         /* 제어문을 활용하여 위 요구사항을 만족할 수 있게 구현합니다.*/
-
-
-        if (operator == '+' || operator == '-' || operator == '*' || operator == '%') {
-            if (operator == '%' && num2==0) {
-                System.out.println("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
-                return 0; // 요것도 문제
+        if (operator == '+' || operator == '-' || operator == '*' || operator == '/') {
+            if (operator == '/' && num2==0) {
+                throw new IllegalArgumentException("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
             }
             switch (operator) {
                 case '+':
                     result = num1 + num2;
                     break;
-
                 case '-':
                     result = num1 - num2;
                     break;
-
                 case '*':
                     result = num1 * num2;
                     break;
-
                 case '/':
                     result = num1 / num2;
                     break;
             }
         } else {
-            System.out.println("***제어문을 다시 입력하여 주세용***");
+            throw new IllegalArgumentException("***제어문을 다시 입력하여 주세용***");
             /* 위 요구사항에 맞게 구현 */
             /* return 연산 결과 */
         }
@@ -84,15 +77,20 @@ public class Calculator {
 
 
             // 예외 처리 연산자가 한국말, 영어, 또는 num2 == 0 이고 optioner == %
-            if ((operator == '+' || operator == '-' || operator == '*' || operator == '%') && (operator != '/' && num2 != 0)){
+//            if ((operator == '+' || operator == '-' || operator == '*' || operator == '/') && (operator != '/' && num2 != 0)){
                 // num2, 한글 영어 연산자 문제
+            try {
                 result = calculator.calculate(num1, num2, operator);
                 System.out.println("결과: " + result);
-                // 필터 if, try
+
                 calculator.setArryList(result); // if 문 써서 예외 처리 해야 하나?
-            System.out.println("저장된 결과Get: " + calculator.getArryList());
+                System.out.println("저장된 결과Get: " + calculator.getArryList());
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+                // 필터 if, try
 //          System.out.println("저장된 결과Set: " + calculator.setArryList(result)); return void 값을 없애버려서 정상
-            }else{}
+//            }else{}
 
             System.out.println("더 계산하시겠습니까? (exit 입력 시 종료) / 결과값 지우기 0입력 / 계속 진행 \"Go\" 입력");
             str1 = sc.next();
