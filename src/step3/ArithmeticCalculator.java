@@ -3,6 +3,7 @@ package step3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class ArithmeticCalculator <T extends Number>{
 
@@ -71,10 +72,9 @@ public class ArithmeticCalculator <T extends Number>{
         arryList.remove(0);
     }
 
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ArithmeticCalculator calculator = new ArithmeticCalculator();
+        ArithmeticCalculator<Double> calculator = new ArithmeticCalculator<>();
 //        List<Integer> arryList = new ArrayList<>();
         double result = 0;
         String str1;
@@ -91,6 +91,8 @@ public class ArithmeticCalculator <T extends Number>{
             char operator = sc.next().charAt(0);
             // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다
 
+
+
             // 예외 처리 연산자가 한국말, 영어, 또는 num2 == 0 이고 optioner == %
             try {
                 result = calculator.calculate(num1, num2, operator);
@@ -98,6 +100,12 @@ public class ArithmeticCalculator <T extends Number>{
 
                 calculator.setArrayList(result); // 왜 오류가 뜨는데 값이 들어가지?
                 System.out.println("저장된 결과Get: " + calculator.getArryList());
+
+                //람다
+                List<Double> ret1 = calculator.getArryList().stream()
+                        .map(num -> num * 10)
+                        .collect(Collectors.toList());
+                System.out.println("람다ret: "+ret1);
             }catch (RuntimeException e){
                 System.out.println(e.getMessage());
                 continue;
