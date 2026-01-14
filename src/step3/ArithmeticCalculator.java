@@ -72,6 +72,18 @@ public class ArithmeticCalculator <T extends Number>{
         arryList.remove(0);
     }
 
+    private static double scannerRead(String str1,Scanner scanner ){
+        while(true){
+            System.out.print(str1);
+            try{
+                double num = scanner.nextDouble();
+                return num;
+            }catch (RuntimeException e){
+                System.out.println("숫자를 입력하세요!!");
+                scanner.next();
+            }
+        }
+    }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArithmeticCalculator<Double> calculator = new ArithmeticCalculator<>();
@@ -80,18 +92,18 @@ public class ArithmeticCalculator <T extends Number>{
         String str1;
 
         while(true) {
-            System.out.print("첫 번째 숫자를 입력하세요: ");
-            double num1 = sc.nextDouble();
-            // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.+
-            System.out.print("두 번째 숫자를 입력하세요: ");
-            double num2 = sc.nextDouble();
-            // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
+            double num1 = scannerRead("첫 번째 숫자를 입력하세요: ",sc);
+            double num2 = scannerRead("두 번째 숫자를 입력하세요: ",sc);
+//            System.out.print("첫 번째 숫자를 입력하세요: ");
+//            double num1 = sc.nextDouble();
+//            // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.+
+//            System.out.print("두 번째 숫자를 입력하세요: ");
+//            double num2 = sc.nextDouble();
+//            // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
 
             System.out.print("사칙연산 기호를 입력하세요: ");
             char operator = sc.next().charAt(0);
             // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다
-
-
 
             // 예외 처리 연산자가 한국말, 영어, 또는 num2 == 0 이고 optioner == %
             try {
