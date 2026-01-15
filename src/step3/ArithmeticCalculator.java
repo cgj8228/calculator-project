@@ -6,55 +6,51 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class ArithmeticCalculator <T extends Number>{
+    // 필드
+    private List<Double> arryList = new ArrayList<>();
+    private List<String> history = new ArrayList<>();
+    private int historyInt = 1;
 
+    public void addHistory(double num1, char operator, double num2, double result) {
+        history.add("[id:" + historyInt+"]" + " " + num1 + " " + operator + " " + num2 + " = " + result);
+        historyInt++;
+    }
+
+    public void printHistory() {
+        for (String line : history) {
+            System.out.println(line);
+        }
+    }
+
+    // 기호 받기
     private enum OperatorType {
         /* 구현 */
         Plus, Minus, Multiply, Divide;
-
         static OperatorType fromString(String op) {
             switch (op) {
-                case "+":
-                    return Plus;
-                case "-":
-                    return Minus;
-                case "*":
-                    return Multiply;
-                case "/":
-                    return Divide;
-                default:
-                    throw new RuntimeException("*****잘못된 사칙연산 입력******: " + op);
+                case "+": return Plus;
+                case "-": return Minus;
+                case "*": return Multiply;
+                case "/": return Divide;
+                default: throw new RuntimeException("*****잘못된 사칙연산 입력******: " + op);
             }
         }
     }
-    private List<Double> arryList = new ArrayList<>();
-
+    // 계산
     public double calculate(T num1, T num2, char operator) {
         double result= 0;
         /* 제어문을 활용하여 위 요구사항을 만족할 수 있게 구현합니다.*/
-
         double a = num1.doubleValue();
         double b = num2.doubleValue();
-
         OperatorType operatorType = OperatorType.fromString(String.valueOf(operator));
         if (operatorType == OperatorType.Divide && b == 0.0) {
             throw new RuntimeException("나눗셈 연산에서 두번째 정수에 0이 입력될 수 없어!!!");
         }
         switch (operatorType) {
-            case Plus:
-                result = a + b;
-                break;
-
-            case Minus:
-                result = a - b;
-                break;
-
-            case Multiply:
-                result = a * b;
-                break;
-
-            case Divide:
-                result = a / b;
-                break;
+            case Plus: result = a + b;break;
+            case Minus: result = a - b;break;
+            case Multiply: result = a * b;break;
+            case Divide: result = a / b;break;
         }
         return result;// 여기서 더미 값이 0 이니까 arrylist에서 0이 들어 가겠지?
     }
@@ -63,15 +59,19 @@ public class ArithmeticCalculator <T extends Number>{
     public List<Double> getArryList() {
         return arryList;
     }
+
     /* Setter 메서드 구현 */
     public void setArrayList(double result) {
         arryList.add(result);
     }
+
+    // 0 누르면 삭제
     public void removeResult() {
         /* 구현 */
+        history.remove(0);
         arryList.remove(0);
     }
-
+    // num1, num2 예외처리
     private static double scannerRead(String str1,Scanner scanner ){
         while(true){
             System.out.print(str1);
@@ -84,34 +84,27 @@ public class ArithmeticCalculator <T extends Number>{
             }
         }
     }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArithmeticCalculator<Double> calculator = new ArithmeticCalculator<>();
-//        List<Integer> arryList = new ArrayList<>();
         double result = 0;
         String str1;
 
         while(true) {
             double num1 = scannerRead("첫 번째 숫자를 입력하세요: ",sc);
             double num2 = scannerRead("두 번째 숫자를 입력하세요: ",sc);
-//            System.out.print("첫 번째 숫자를 입력하세요: ");
-//            double num1 = sc.nextDouble();
-//            // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.+
-//            System.out.print("두 번째 숫자를 입력하세요: ");
-//            double num2 = sc.nextDouble();
-//            // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
 
             System.out.print("사칙연산 기호를 입력하세요: ");
             char operator = sc.next().charAt(0);
             // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다
 
-            // 예외 처리 연산자가 한국말, 영어, 또는 num2 == 0 이고 optioner == %
             try {
                 result = calculator.calculate(num1, num2, operator);
-                System.out.println(num1 + " " + operator + " " + num2 + " = " + result);
-
+//                System.out.println(num1 + " " + operator + " " + num2 + " = " + result);
+                calculator.addHistory(num1,operator, num2, result);
+                calculator.printHistory();
                 calculator.setArrayList(result); // 왜 오류가 뜨는데 값이 들어가지?
-                System.out.println("저장된 결과Get: " + calculator.getArryList());
 
                 //람다
                 List<Double> ret1 = calculator.getArryList().stream()
