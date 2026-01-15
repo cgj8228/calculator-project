@@ -1,6 +1,6 @@
 # CalculatorProject
 
-Spring_3기 최길중
+Spring_3기 최길중  
 Java 계산기 과제입니다.
 
 - step1: Scanner로 입력받아 사칙연산 수행
