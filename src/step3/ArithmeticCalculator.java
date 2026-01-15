@@ -108,7 +108,7 @@ public class ArithmeticCalculator <T extends Number>{
             // 예외 처리 연산자가 한국말, 영어, 또는 num2 == 0 이고 optioner == %
             try {
                 result = calculator.calculate(num1, num2, operator);
-                System.out.println("결과: " + result);
+                System.out.println(num1 + " " + operator + " " + num2 + " = " + result);
 
                 calculator.setArrayList(result); // 왜 오류가 뜨는데 값이 들어가지?
                 System.out.println("저장된 결과Get: " + calculator.getArryList());
